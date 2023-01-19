@@ -3,12 +3,16 @@
 
 // import express library
 const express = require('express');
+const cors = require("cors")
 
 // import our stuff (our files and components)
 const studentsData = require('./studentsData.json')
 
 // initialize express app
 const app = express();
+
+
+app.use(cors())
 
 // Define our routes
 
@@ -32,7 +36,7 @@ app.get('/students/:id', (req, res) => {
     try {
         const { id } = req.params;
         const { students } = studentsData;
-        
+
         const student = students.find(el => el.id === id);
         if (student) {
             res.status(200).json({data: student });
@@ -42,6 +46,6 @@ app.get('/students/:id', (req, res) => {
     } catch (error) {
         res.status(500).json({ error: err.message })
     }
-})
+});
 
 module.exports = app;
